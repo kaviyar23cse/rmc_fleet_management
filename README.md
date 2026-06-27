@@ -1,69 +1,65 @@
 # RMC Fleet Management
 
-A full-stack fleet management platform for Ready-Mix Concrete operations, built for owners and drivers to manage vehicles, documents, expenses, compliance workflows, and engine-health insights.
+RMC Fleet Management is an enterprise-ready full-stack platform designed for Ready-Mix Concrete fleet operations. It enables owners and drivers to manage operational workflows, fleet compliance, and predictive maintenance from a unified system.
 
-## Overview
+## Business Scope
 
-RMC Fleet Management provides:
+- Role-based workflows for owner and driver operations
+- Vehicle, driver, document, expense, and checklist management
+- Automated document expiry monitoring and notifications
+- Engine health prediction powered by a dedicated ML service
+- OCR-supported extraction utilities in the ML module
 
-- Role-based web experience for owners and drivers
-- Vehicle and driver lifecycle management
-- Document expiry tracking with notification workflows
-- Expense tracking and daily checklist operations
-- Engine health analytics powered by an ML microservice
-- OCR-assisted data extraction in the ML module
+## System Architecture
 
-## Core Modules
+### Frontend Application
 
-### Frontend (Vite + React)
+- React + Vite web application
+- Owner and driver portals with dedicated route structures
+- Authentication flows, notifications, and analytics dashboards
+- Centralized API client with JWT authorization handling
 
-- Owner dashboard, analytics, and operations pages
-- Driver dashboard, checklist, expenses, and notifications
-- Authentication and password reset UI
-- API integration through Axios with JWT header injection
+### Backend API
 
-### Backend API (Express + MongoDB)
+- Express-based REST services
+- MongoDB persistence via Mongoose
+- Authentication and authorization with JWT
+- Scheduled expiry checks and email notification service
+- File upload handling and API rate limiting
 
-- JWT-based auth and role-aware routing
-- CRUD services for vehicles, drivers, documents, expenses, checklists, notifications
-- Document-expiry cron jobs and email alert service
-- File upload support and API rate-limiting
+### Machine Learning Service
 
-### ML Service (Flask)
+- Flask-based prediction service
+- Engine parameter risk analysis and recommendation outputs
+- OCR pipeline for extracting structured values from images
 
-- Engine health prediction endpoint
-- Rule-based issue analysis with severity and remedy suggestions
-- OCR utilities for extracting structured values from image inputs
-
-## Tech Stack
+## Technology Stack
 
 - Frontend: React, React Router, Axios, Chart.js, Vite
-- Backend: Node.js, Express, Mongoose, JWT, Nodemailer, Multer, node-cron
+- Backend: Node.js, Express, Mongoose, JWT, Multer, Nodemailer, node-cron
 - Database: MongoDB
 - ML: Python, Flask, scikit-learn, EasyOCR, OpenCV, PyTorch
 
-## Repository Structure
+## Repository Layout
 
 ```text
 RMC_fleet/
-	src/                 # React frontend
-	backend/             # Express API
-	ML_model/            # Flask ML service + training assets
-	public/              # Frontend static assets
+	src/                 Frontend application
+	backend/             Backend API and business services
+	ML_model/            ML/OCR service and model artifacts
+	public/              Static frontend assets
 ```
 
 ## Prerequisites
 
-Install these tools before setup:
-
 - Node.js 18+
 - npm 9+
 - Python 3.10+
-- MongoDB connection (local or cloud)
+- MongoDB instance (Atlas or self-hosted)
 
-## Environment Variables
+## Environment Configuration
 
-Create `backend/.env` with values similar to:
+Create backend environment file with required values:
 
 ```env
 PORT=5000
@@ -81,22 +77,17 @@ EMAIL_PASS=your_app_password
 EMAIL_FROM=RMC Fleet <your_email>
 ```
 
-Notes:
+Security note: never commit credentials or environment files to source control.
 
-- Do not commit `.env` files.
-- If using Gmail SMTP, use an app password.
+## Installation
 
-## Local Setup
-
-### 1. Clone and install frontend
+### Install frontend dependencies
 
 ```bash
-git clone <your-repo-url>
-cd RMC_fleet
 npm install
 ```
 
-### 2. Install backend dependencies
+### Install backend dependencies
 
 ```bash
 cd backend
@@ -104,7 +95,7 @@ npm install
 cd ..
 ```
 
-### 3. Install ML dependencies
+### Install ML dependencies
 
 ```bash
 cd ML_model
@@ -112,88 +103,57 @@ pip install -r requirements.txt
 cd ..
 ```
 
-## Run Services (Development)
+## Run the Platform (Development)
 
-Open three terminals from repository root.
+Use three terminals from project root.
 
-### Terminal 1: Backend API
+### Backend API
 
 ```bash
 cd backend
 npm run dev
 ```
 
-Backend default: `http://localhost:5000`
-
-### Terminal 2: Frontend
+### Frontend Application
 
 ```bash
 npm run dev
 ```
 
-Frontend default: `http://localhost:5173`
-
-### Terminal 3: ML Service
+### ML Service
 
 ```bash
 cd ML_model
 python app.py
 ```
 
-ML service default: `http://127.0.0.1:5001`
+Default service endpoints:
 
-## Available Scripts
+- Frontend: http://localhost:5173
+- Backend: http://localhost:5000
+- ML Service: http://127.0.0.1:5001
 
-### Root (Frontend)
+## NPM Scripts
 
-- `npm run dev` - start Vite dev server
-- `npm run build` - production build
-- `npm run preview` - preview production build
-- `npm run lint` - run ESLint
+### Frontend (root)
+
+- npm run dev
+- npm run build
+- npm run preview
+- npm run lint
 
 ### Backend
 
-- `npm run dev` - start API with nodemon
-- `npm start` - start API with node
+- npm run dev
+- npm start
 
-## API Health Check
+## API Verification
 
-After backend starts:
+Backend health endpoint:
 
-- `GET /api/health` -> confirms API is running
-
-## Security Guidance
-
-- Never commit credentials, keys, or secrets
-- Rotate credentials immediately if exposed
-- Keep `.env` files local and excluded by `.gitignore`
-- Use least-privilege credentials for DB and SMTP
-
-## Troubleshooting
-
-### Push or authentication issues
-
-- Re-check remote URL and current branch tracking
-- Retry push with HTTP/1.1 if needed
-
-### ML service unavailable from backend
-
-- Ensure Flask service is running on `ML_SERVICE_URL`
-- Confirm no firewall/port conflicts on `5001`
-
-### MongoDB connection failures
-
-- Validate `MONGO_URI`
-- Ensure DB IP/network access is allowed
-
-## Roadmap Ideas
-
-- Containerized deployment with Docker Compose
-- CI pipeline for lint/test/build
-- Unit and integration test suites
-- Observability (structured logs + metrics)
+- GET /api/health
 
 ## License
 
-This project is currently unlicensed. Add a license file if distribution is planned.
+This repository currently has no license declaration. Add a license before public distribution.
 
