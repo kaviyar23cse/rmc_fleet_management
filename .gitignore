@@ -13,6 +13,12 @@ dist
 dist-ssr
 *.local
 
+# Environment and secrets
+.env
+.env.*
+backend/.env
+ML_model/.env
+
 # Python virtual environment
 ML_model/ocr_env/
 ocr_env/
